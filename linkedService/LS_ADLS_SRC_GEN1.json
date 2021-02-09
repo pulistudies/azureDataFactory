@@ -1,0 +1,16 @@
+{
+	"name": "LS_ADLS_SRC_GEN1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://datalakepuligen1.azuredatalakestore.net/webhdfs/v1",
+			"servicePrincipalId": "40c6f5e3-0ec9-4323-901e-8fa4edeada3d",
+			"tenant": "4d785f79-c58b-4639-8885-110ae332ee27",
+			"subscriptionId": "ada9935a-24dc-44e0-a65d-51982a8e4497",
+			"resourceGroupName": "rg_puli",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkFERi1TVFVESUVTXzM1N2ZjMWE3LWM2NTYtNDU3NS1hNDg5LWVlNTg3MTQyN2I5ZiINCn0="
+		}
+	}
+}

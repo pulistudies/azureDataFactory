@@ -1,0 +1,32 @@
+{
+	"name": "window",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_WINDOW_SRC",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_BLOB_TARGET_EMP_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Window1"
+				}
+			],
+			"script": "source(output(\n\t\tname as string,\n\t\tno as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 window(over(name),\n\tasc(no, true),\n\tRANK = rank(),\n\t\tDENSERANK = denseRank(),\n\t\tLEAD = lead(no),\n\t\tLAG = lag(no),\n\t\tCUN_INDIVIDUAL = sum(no)) ~> Window1\nWindow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

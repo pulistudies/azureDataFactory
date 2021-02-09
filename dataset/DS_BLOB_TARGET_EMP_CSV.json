@@ -1,0 +1,23 @@
+{
+	"name": "DS_BLOB_TARGET_EMP_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BLOB_EMP_SRC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "target"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

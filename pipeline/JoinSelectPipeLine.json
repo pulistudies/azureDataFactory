@@ -1,0 +1,38 @@
+{
+	"name": "JoinSelectPipeLine",
+	"properties": {
+		"activities": [
+			{
+				"name": "JoinDataFlow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_joins",
+						"type": "DataFlowReference",
+						"parameters": {
+							"parameter1": "SAL+COMM",
+							"parameter2": "SAL+COMM"
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-01-30T08:31:25Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "df_joins",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_SRC_EMP_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "adlssrcemp"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_BLOB_TARGET_EMP_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "blobtargetemp"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectedColumns"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Filter1"
+				},
+				{
+					"name": "Sort1"
+				}
+			],
+			"script": "parameters{\n\tparameter1 as string (SAL+COMM),\n\tparameter2 as string (SAL+COMM)\n}\nsource(output(\n\t\tEMPNO as short,\n\t\tENAME as string,\n\t\tJOB as string,\n\t\tMGR as string,\n\t\tHIREDATE as string,\n\t\tSAL as string,\n\t\tCOMM as string,\n\t\tDEPTNO as short\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('roundRobin', 2)) ~> adlssrcemp\nadlssrcemp select(mapColumn(\n\t\tEmployeeNumber = EMPNO,\n\t\tJustName = ENAME,\n\t\tOccupation = JOB,\n\t\tSalary = SAL,\n\t\tCommission = COMM,\n\t\tDepartmentNumber = DEPTNO\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns derive(total = toInteger(Salary) + iifNull(toInteger(Commission),0)) ~> DerivedColumn1\nDerivedColumn1 filter(DepartmentNumber==10) ~> Filter1\nFilter1 sort(desc(toInteger(Salary), true)) ~> Sort1\nSort1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\ttruncate: true,\n\tpartitionBy('roundRobin', 2),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> blobtargetemp"
+		}
+	}
+}

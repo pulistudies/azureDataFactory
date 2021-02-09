@@ -1,0 +1,38 @@
+{
+	"name": "json_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_JSON_SRC",
+						"type": "DatasetReference"
+					},
+					"name": "jsonfile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_BLOB_TARGET_EMP_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "JSON"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Flatten1"
+				},
+				{
+					"name": "Flatten2"
+				},
+				{
+					"name": "Flatten3"
+				}
+			],
+			"script": "source(output(\n\t\tquiz as (sport as (q1 as (question as string, options as string[], answer as string)), maths as (q1 as (question as string, options as string[], answer as string), q2 as (question as string, options as string[], answer as string)))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'singleDocument') ~> jsonfile\njsonfile foldDown(unroll(quiz.sport.q1.options),\n\tmapColumn(\n\t\tquestion = quiz.sport.q1.question,\n\t\toptions = quiz.sport.q1.options,\n\t\tanswer = quiz.sport.q1.answer,\n\t\tmaths = quiz.maths\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 foldDown(unroll(maths.q1.options),\n\tmapColumn(\n\t\tquestion = maths.q1.question,\n\t\toptions = maths.q1.options,\n\t\tanswer = maths.q1.answer,\n\t\tq2 = maths.q2\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten2\nFlatten2 foldDown(unroll(q2.options),\n\tmapColumn(\n\t\tquestion = q2.question,\n\t\toptions = q2.options,\n\t\tanswer = q2.answer\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten3\nFlatten3 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['examJson.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> JSON"
+		}
+	}
+}
