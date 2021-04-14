@@ -1498,6 +1498,27 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS2_SINK_EMP')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ORACLE_SCOTT_DEPT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ORCL_SCOTT_EMP_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SCOTT",
+					"table": "DEPT"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ORCL_SCOTT_EMP_DB')]"
+			]
 		}
 	]
 }
