@@ -1,0 +1,20 @@
+{
+	"name": "Adataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_EMP_ADLS2_LANDING",
+						"type": "DatasetReference"
+					},
+					"name": "empSrc"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tEMPNO as short,\n\t\tENAME as string,\n\t\tJOB as string,\n\t\tMGR as short,\n\t\tHIREDATE as string,\n\t\tSAL as double,\n\t\tCOMM as double,\n\t\tDEPTNO as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('hash', 1)) ~> empSrc"
+		}
+	}
+}
