@@ -1,0 +1,16 @@
+{
+	"name": "DS_ORACLE_SCOTT_EMP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ORCL_SCOTT_EMP_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SCOTT",
+			"table": "EMP"
+		}
+	}
+}

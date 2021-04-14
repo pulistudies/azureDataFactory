@@ -1,0 +1,22 @@
+{
+	"name": "DS_ADLS2_EMP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS2_SINK_EMP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "landing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
