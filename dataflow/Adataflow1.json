@@ -12,13 +12,21 @@
 					"name": "empSrc"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS2_EMP",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "ConditionalSplitDepatwise"
 				}
 			],
-			"script": "source(output(\n\t\tEMPNO as short,\n\t\tENAME as string,\n\t\tJOB as string,\n\t\tMGR as short,\n\t\tHIREDATE as string,\n\t\tSAL as double,\n\t\tCOMM as double,\n\t\tDEPTNO as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('hash', 1)) ~> empSrc\nempSrc split(DEPTNO==10,\n\tDEPTNO==20,\n\tDEPTNO==30,\n\tdisjoint: false) ~> ConditionalSplitDepatwise@(dept10, dept20, dept30, deptOthers)"
+			"script": "source(output(\n\t\tEMPNO as short,\n\t\tENAME as string,\n\t\tJOB as string,\n\t\tMGR as short,\n\t\tHIREDATE as string,\n\t\tSAL as double,\n\t\tCOMM as double,\n\t\tDEPTNO as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('hash', 1)) ~> empSrc\nempSrc split(DEPTNO==10,\n\tDEPTNO==20,\n\tDEPTNO==30,\n\tDEPTNO==40,\n\tdisjoint: false) ~> ConditionalSplitDepatwise@(dept10, dept20, dept30, dept40, deptOthers)\nConditionalSplitDepatwise@dept10 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['dept10.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1"
 		}
 	}
 }
