@@ -1,0 +1,146 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf2ppu"
+		},
+		"LS_ABLB_SINK_DB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_ABLB_SINK_DB'"
+		},
+		"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'LS_ADLS_SRC_GEN1'"
+		},
+		"LS_BLOB_EMP_SRC_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_BLOB_EMP_SRC'"
+		},
+		"LS_ORCL_SRC_DB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SRC_DB'"
+		},
+		"LS_ORCL_SCOTT_EMP_DB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SCOTT_EMP_DB'"
+		},
+		"LS_ADLS2_SINK_EMP_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_ADLS2_SINK_EMP'"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://datalakepuligen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "40c6f5e3-0ec9-4323-901e-8fa4edeada3d"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "4d785f79-c58b-4639-8885-110ae332ee27"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "ada9935a-24dc-44e0-a65d-51982a8e4497"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "rg_puli"
+		},
+		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsgen2ppu.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf2ppu_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_ABLB_SINK_DB_connectionString": {
+						"value": "[parameters('LS_ABLB_SINK_DB_connectionString')]"
+					},
+					"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_servicePrincipalKey')]"
+					},
+					"LS_BLOB_EMP_SRC_connectionString": {
+						"value": "[parameters('LS_BLOB_EMP_SRC_connectionString')]"
+					},
+					"LS_ORCL_SRC_DB_connectionString": {
+						"value": "[parameters('LS_ORCL_SRC_DB_connectionString')]"
+					},
+					"LS_ADLS2_SINK_EMP_accountKey": {
+						"value": "[parameters('LS_ADLS2_SINK_EMP_accountKey')]"
+					},
+					"LS_ORCL_SCOTT_EMP_DB_connectionString": {
+						"value": "[parameters('LS_ORCL_SCOTT_EMP_DB_connectionString')]"
+					},
+					"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"LS_ADLS_SRC_GEN1_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_servicePrincipalId')]"
+					},
+					"LS_ADLS_SRC_GEN1_properties_typeProperties_tenant": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_tenant')]"
+					},
+					"LS_ADLS_SRC_GEN1_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_subscriptionId')]"
+					},
+					"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName')]"
+					},
+					"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+						"value": "[parameters('LS_ADLS2_SINK_EMP_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf2ppu_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf2ppu_ArmTemplate_0')]"
+			]
+		}
+	]
+}

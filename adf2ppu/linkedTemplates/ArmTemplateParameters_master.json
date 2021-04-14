@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf2ppu"
+		},
+		"LS_ABLB_SINK_DB_connectionString": {
+			"value": ""
+		},
+		"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
+			"value": ""
+		},
+		"LS_BLOB_EMP_SRC_connectionString": {
+			"value": ""
+		},
+		"LS_ORCL_SRC_DB_connectionString": {
+			"value": ""
+		},
+		"LS_ORCL_SCOTT_EMP_DB_connectionString": {
+			"value": ""
+		},
+		"LS_ADLS2_SINK_EMP_accountKey": {
+			"value": ""
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://datalakepuligen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_servicePrincipalId": {
+			"value": "40c6f5e3-0ec9-4323-901e-8fa4edeada3d"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_tenant": {
+			"value": "4d785f79-c58b-4639-8885-110ae332ee27"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_subscriptionId": {
+			"value": "ada9935a-24dc-44e0-a65d-51982a8e4497"
+		},
+		"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
+			"value": "rg_puli"
+		},
+		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+			"value": "https://adlsgen2ppu.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
