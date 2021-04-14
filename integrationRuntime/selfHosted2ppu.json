@@ -1,0 +1,6 @@
+{
+	"name": "selfHosted2ppu",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
