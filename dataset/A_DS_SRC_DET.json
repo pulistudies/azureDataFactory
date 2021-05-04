@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "stagging"
+				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
