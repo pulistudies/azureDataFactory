@@ -100,7 +100,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "A_DS_SRC_DET",
+									"referenceName": "A_NEW_LANDING",
 									"type": "DatasetReference"
 								}
 							],
