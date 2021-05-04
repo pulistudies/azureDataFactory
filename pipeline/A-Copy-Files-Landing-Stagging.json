@@ -30,6 +30,25 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "A-For-Each-Det",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "A-Get-Details",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('A-Get-Details').output",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"annotations": []
