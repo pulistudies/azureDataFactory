@@ -13,6 +13,25 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ORACLE_SCOTT_DEPT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ORCL_SCOTT_EMP_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SCOTT",
+					"table": "DEPT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ORACLE_SCOTT_EMP')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -594,7 +613,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
-								"referenceName": "A_DS_SRC_DET",
+								"referenceName": "A_NEW_LANDING",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -624,7 +643,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('A-Get-Details').output.Childitems",
+								"value": "@activity('A-Get-Details').output.childItems",
 								"type": "Expression"
 							},
 							"activities": [
@@ -664,7 +683,7 @@
 											"formatSettings": {
 												"type": "DelimitedTextWriteSettings",
 												"quoteAllText": true,
-												"fileExtension": ".txt"
+												"fileExtension": ""
 											}
 										},
 										"enableStaging": false,
@@ -912,7 +931,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_ORACLE_SCOTT_EMP')]"
+				"[concat(variables('factoryId'), '/datasets/DS_ORACLE_SCOTT_EMP')]",
+				"[concat(variables('factoryId'), '/datasets/DS_ORACLE_SCOTT_DEPT')]"
 			]
 		},
 		{
@@ -957,50 +977,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/SurgateKey')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WINDOW_PIPE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "window",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"annotations": [],
-				"lastPublishTime": "2021-02-01T11:21:45Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/window')]"
 			]
 		}
 	]

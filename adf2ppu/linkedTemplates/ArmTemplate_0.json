@@ -634,7 +634,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "stagging"
+						"folderPath": "output",
+						"fileSystem": "landing"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -647,24 +648,33 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_ORACLE_SCOTT_DEPT')]",
+			"name": "[concat(parameters('factoryName'), '/A_NEW_LANDING')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_ORCL_SCOTT_EMP_DB",
+					"referenceName": "A_LS_DET",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"schema": "SCOTT",
-					"table": "DEPT"
-				}
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "landing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_ORCL_SCOTT_EMP_DB')]"
+				"[concat(variables('factoryId'), '/linkedServices/A_LS_DET')]"
 			]
 		}
 	]
