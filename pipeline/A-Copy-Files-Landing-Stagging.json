@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "A_DS_SRC_DET",
+						"referenceName": "A_NEW_LANDING",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
