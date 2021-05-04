@@ -1,0 +1,21 @@
+{
+	"name": "A_DS_SRC_DET",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "A_LS_DET",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "landing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
