@@ -45,7 +45,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('A-Get-Details').output.childItem",
+						"value": "@activity('A-Get-Details').output.childitem",
 						"type": "Expression"
 					},
 					"activities": [
