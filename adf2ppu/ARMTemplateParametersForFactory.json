@@ -8,20 +8,26 @@
 		"LS_ABLB_SINK_DB_connectionString": {
 			"value": ""
 		},
+		"LS_ADLS2_SINK_EMP_accountKey": {
+			"value": ""
+		},
 		"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
 			"value": ""
 		},
 		"LS_BLOB_EMP_SRC_connectionString": {
 			"value": ""
 		},
-		"LS_ORCL_SRC_DB_connectionString": {
-			"value": ""
-		},
 		"LS_ORCL_SCOTT_EMP_DB_connectionString": {
 			"value": ""
 		},
-		"LS_ADLS2_SINK_EMP_accountKey": {
+		"LS_ORCL_SRC_DB_connectionString": {
 			"value": ""
+		},
+		"A_LS_DET_accountKey": {
+			"value": ""
+		},
+		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+			"value": "https://adlsgen2ppu.dfs.core.windows.net"
 		},
 		"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
 			"value": "https://datalakepuligen1.azuredatalakestore.net/webhdfs/v1"
@@ -38,7 +44,7 @@
 		"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
 			"value": "rg_puli"
 		},
-		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+		"A_LS_DET_properties_typeProperties_url": {
 			"value": "https://adlsgen2ppu.dfs.core.windows.net"
 		}
 	}

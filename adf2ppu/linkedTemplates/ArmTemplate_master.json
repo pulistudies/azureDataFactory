@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_ABLB_SINK_DB'"
 		},
+		"LS_ADLS2_SINK_EMP_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_ADLS2_SINK_EMP'"
+		},
 		"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'servicePrincipalKey' of 'LS_ADLS_SRC_GEN1'"
@@ -19,17 +23,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_BLOB_EMP_SRC'"
 		},
-		"LS_ORCL_SRC_DB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SRC_DB'"
-		},
 		"LS_ORCL_SCOTT_EMP_DB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SCOTT_EMP_DB'"
 		},
-		"LS_ADLS2_SINK_EMP_accountKey": {
+		"LS_ORCL_SRC_DB_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_ADLS2_SINK_EMP'"
+			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SRC_DB'"
+		},
+		"A_LS_DET_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'A_LS_DET'"
+		},
+		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsgen2ppu.dfs.core.windows.net"
 		},
 		"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -51,7 +59,7 @@
 			"type": "string",
 			"defaultValue": "rg_puli"
 		},
-		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+		"A_LS_DET_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2ppu.dfs.core.windows.net"
 		},
@@ -85,6 +93,9 @@
 					"LS_ABLB_SINK_DB_connectionString": {
 						"value": "[parameters('LS_ABLB_SINK_DB_connectionString')]"
 					},
+					"LS_ADLS2_SINK_EMP_accountKey": {
+						"value": "[parameters('LS_ADLS2_SINK_EMP_accountKey')]"
+					},
 					"LS_ADLS_SRC_GEN1_servicePrincipalKey": {
 						"value": "[parameters('LS_ADLS_SRC_GEN1_servicePrincipalKey')]"
 					},
@@ -94,11 +105,14 @@
 					"LS_ORCL_SRC_DB_connectionString": {
 						"value": "[parameters('LS_ORCL_SRC_DB_connectionString')]"
 					},
-					"LS_ADLS2_SINK_EMP_accountKey": {
-						"value": "[parameters('LS_ADLS2_SINK_EMP_accountKey')]"
+					"A_LS_DET_accountKey": {
+						"value": "[parameters('A_LS_DET_accountKey')]"
 					},
 					"LS_ORCL_SCOTT_EMP_DB_connectionString": {
 						"value": "[parameters('LS_ORCL_SCOTT_EMP_DB_connectionString')]"
+					},
+					"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
+						"value": "[parameters('LS_ADLS2_SINK_EMP_properties_typeProperties_url')]"
 					},
 					"LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri": {
 						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_dataLakeStoreUri')]"
@@ -115,8 +129,8 @@
 					"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
 						"value": "[parameters('LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName')]"
 					},
-					"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
-						"value": "[parameters('LS_ADLS2_SINK_EMP_properties_typeProperties_url')]"
+					"A_LS_DET_properties_typeProperties_url": {
+						"value": "[parameters('A_LS_DET_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -140,6 +154,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'adf2ppu_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf2ppu_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf2ppu_ArmTemplate_1')]"
 			]
 		}
 	]
