@@ -1913,7 +1913,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": "output",
-						"fileSystem": "landing"
+						"fileSystem": "stagging"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
