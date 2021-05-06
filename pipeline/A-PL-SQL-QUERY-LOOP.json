@@ -1,0 +1,15 @@
+{
+	"name": "A-PL-SQL-QUERY-LOOP",
+	"properties": {
+		"variables": {
+			"tableList": {
+				"type": "Array",
+				"defaultValue": [
+					"select * from scott.emp",
+					"select * from scott.dept"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
