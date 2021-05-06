@@ -65,7 +65,13 @@
 							"outputs": [
 								{
 									"referenceName": "A_NEW_LANDING",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@concat(variables('tableList'),'.csv')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -73,11 +79,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"tableList": {
 				"type": "Array",
