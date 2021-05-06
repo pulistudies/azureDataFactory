@@ -1,0 +1,12 @@
+{
+	"name": "OracleTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DATABASE_QUERY",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
