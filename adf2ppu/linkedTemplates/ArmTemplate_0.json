@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf2ppu"
 		},
+		"A_LS_DET_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'A_LS_DET'"
+		},
 		"LS_ABLB_SINK_DB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_ABLB_SINK_DB'"
@@ -27,13 +31,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SRC_DB'"
 		},
-		"A_LS_DET_accountKey": {
+		"LS_DATABASE_QUERY_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'A_LS_DET'"
+			"metadata": "Secure string for 'connectionString' of 'LS_DATABASE_QUERY'"
 		},
-		"LS_ORCL_SCOTT_EMP_DB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_ORCL_SCOTT_EMP_DB'"
+		"A_LS_DET_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsgen2ppu.dfs.core.windows.net"
 		},
 		"LS_ADLS2_SINK_EMP_properties_typeProperties_url": {
 			"type": "string",
@@ -58,16 +62,29 @@
 		"LS_ADLS_SRC_GEN1_properties_typeProperties_resourceGroupName": {
 			"type": "string",
 			"defaultValue": "rg_puli"
-		},
-		"A_LS_DET_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsgen2ppu.dfs.core.windows.net"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/A_LS_DET')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('A_LS_DET_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('A_LS_DET_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LS_ABLB_SINK_DB')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -156,21 +173,61 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/A_LS_DET')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/A_DS_SRC_DET')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"linkedServiceName": {
+					"referenceName": "A_LS_DET",
+					"type": "LinkedServiceReference"
+				},
 				"annotations": [],
-				"type": "AzureBlobFS",
+				"type": "DelimitedText",
 				"typeProperties": {
-					"url": "[parameters('A_LS_DET_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('A_LS_DET_accountKey')]"
-					}
-				}
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "output",
+						"fileSystem": "stagging"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/A_LS_DET')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/A_NEW_LANDING')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "A_LS_DET",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "landing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/A_LS_DET')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_ADLS2_EMP')]",
@@ -602,14 +659,14 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_ORCL_SCOTT_EMP_DB')]",
+			"name": "[concat(parameters('factoryName'), '/LS_DATABASE_QUERY')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "Oracle",
 				"typeProperties": {
-					"connectionString": "[parameters('LS_ORCL_SCOTT_EMP_DB_connectionString')]"
+					"connectionString": "[parameters('LS_DATABASE_QUERY_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "selfHosted2ppu",
@@ -618,63 +675,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/selfHosted2ppu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/A_DS_SRC_DET')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "A_LS_DET",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "output",
-						"fileSystem": "stagging"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/A_LS_DET')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/A_NEW_LANDING')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "A_LS_DET",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "landing"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/A_LS_DET')]"
 			]
 		}
 	]
