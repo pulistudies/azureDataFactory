@@ -29,7 +29,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "@item()",
+										"value": "@concat('select * from ',item())",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
@@ -43,7 +43,7 @@
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
 										"quoteAllText": true,
-										"fileExtension": ".csv"
+										"fileExtension": ""
 									}
 								},
 								"enableStaging": false,
@@ -73,12 +73,18 @@
 				}
 			}
 		],
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"tableList": {
 				"type": "Array",
 				"defaultValue": [
-					"select * from scott.emp",
-					"select * from scott.dept"
+					"emp",
+					"dept",
+					"salgrade"
 				]
 			}
 		},
