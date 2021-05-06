@@ -1,0 +1,8 @@
+{
+	"name": "OracleTable1",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
