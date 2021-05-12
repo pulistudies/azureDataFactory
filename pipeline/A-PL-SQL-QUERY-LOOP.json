@@ -68,7 +68,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@concat(variables('tableList'),'.csv')",
+											"value": "@concat(item(), '_', formatDateTime(utcnow(),'dd-mm-yyyy'),'.csv')",
 											"type": "Expression"
 										}
 									}
